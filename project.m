@@ -27,13 +27,15 @@ TOTAL_STEPS = length(0:dt:TOTAL_TIME);
 %% Simulate
 x = zeros(5,TOTAL_STEPS);
 x(:,1) = x0;
+maximum_beta = 2.2/6.5;
 for i=2:TOTAL_STEPS
     
     %%% feedback linear beta
     beta = feedback(x(:,i-1), sigma, gamma, alpha_1,alpha_2, N);
     %%%
     
-    beta = max(beta, 2.2/6.5);
+    beta = max(beta, maximum_beta);
+    maximum_beta = maximum_beta*0.999;
     
     x(:,i) = x(:,i-1) + dynamics(x(:,i-1), xi, sigma, gamma, alpha, rho, N, beta)*dt;
 end
