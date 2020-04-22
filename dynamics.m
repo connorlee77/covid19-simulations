@@ -1,4 +1,4 @@
-function dxdt = dynamics(x, zeta, sigma, gamma, alpha, rho, N, beta)
+function dxdt = dynamics(x, xi, sigma, gamma, alpha, rho, N, beta)
     dxdt = zeros(5,1);
     
     S = x(1);
@@ -7,10 +7,10 @@ function dxdt = dynamics(x, zeta, sigma, gamma, alpha, rho, N, beta)
     R = x(4);
     D = x(5);
     
-    sdot = zeta*R - S*I/N*beta;
+    sdot = xi*R - S*I/N*beta;
     edot = -sigma*E + S*I/N*beta;
     idot = sigma*E - gamma*I;
-    rdot = (1 - alpha)*gamma*I - zeta*R;
+    rdot = (1 - alpha)*gamma*I - xi*R;
     ddot = alpha*rho*I;
     
     dxdt(1) = sdot;

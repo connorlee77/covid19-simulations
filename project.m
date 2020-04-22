@@ -1,11 +1,11 @@
 %% Constants
-zeta = 0.2;
+xi = 0.0;
 sigma = 1/5.1;
 gamma = 0.154;
 alpha = 0.034;
 rho = 1/17.8;
 beta = 2.2/6.5;
-N = 1e5;
+N = 8*1e9;
 % Controller Parameters
 alpha_1 = 1;
 alpha_2 = 1;
@@ -33,7 +33,9 @@ for i=2:TOTAL_STEPS
     beta = feedback(x(:,i-1), sigma, gamma, alpha_1,alpha_2, N);
     %%%
     
-    x(:,i) = x(:,i-1) + dynamics(x(:,i-1), zeta, sigma, gamma, alpha, rho, N, beta)*dt;
+    beta = max(beta, 2.2/6.5);
+    
+    x(:,i) = x(:,i-1) + dynamics(x(:,i-1), xi, sigma, gamma, alpha, rho, N, beta)*dt;
 end
 
 subplot(3, 2, 1)
