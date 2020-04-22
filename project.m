@@ -6,6 +6,9 @@ alpha = 0.034;
 rho = 1/17.8;
 beta = 2.2/6.5;
 N = 1e5;
+% Controller Parameters
+alpha_1 = 1;
+alpha_2 = 1;
 
 %% Intial conditions
 I0 = 10; % 10 infected
@@ -27,7 +30,7 @@ x(:,1) = x0;
 for i=2:TOTAL_STEPS
     
     %%% feedback linear beta
-    % beta = feedback(...)
+    beta = feedback(x(:,i-1), sigma, gamma, alpha_1,alpha_2, N);
     %%%
     
     x(:,i) = x(:,i-1) + dynamics(x(:,i-1), zeta, sigma, gamma, alpha, rho, N, beta)*dt;
