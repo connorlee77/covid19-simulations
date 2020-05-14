@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     16558,        499]
-NotebookOptionsPosition[     15405,        472]
-NotebookOutlinePosition[     15749,        487]
-CellTagsIndexPosition[     15706,        484]
+NotebookDataLength[     10533,        308]
+NotebookOptionsPosition[      9382,        281]
+NotebookOutlinePosition[      9726,        296]
+CellTagsIndexPosition[      9683,        293]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -240,13 +240,9 @@ Cell[BoxData[{
   RowBox[{"eta", "=", 
    RowBox[{"{", 
     RowBox[{"y", ",", " ", "ydot"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"V", "=", 
-   RowBox[{"eta", ".", "T", ".", "P", ".", "eta"}]}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{"dVdt", "=", 
+ RowBox[{"detadx", "=", 
   RowBox[{"D", "[", 
-   RowBox[{"V", ",", " ", 
+   RowBox[{"eta", ",", " ", 
     RowBox[{"{", 
      RowBox[{
       RowBox[{"{", 
@@ -256,218 +252,31 @@ Cell[BoxData[{
    "]"}]}]}], "Input",
  CellChangeTimes->{{3.79848526129877*^9, 3.7984853006870146`*^9}, {
   3.7984855248566585`*^9, 3.7984855789619856`*^9}, {3.798485618600006*^9, 
-  3.798485683462529*^9}},
- CellLabel->"In[55]:=",ExpressionUUID->"42f61c25-e57b-4db2-94fc-b1f6f2d3f847"],
+  3.798485683462529*^9}, {3.798485815843367*^9, 3.798485858319518*^9}, {
+  3.798485937284315*^9, 3.7984859657821054`*^9}, {3.798486107928914*^9, 
+  3.798486108342843*^9}},
+ CellLabel->"In[67]:=",ExpressionUUID->"42f61c25-e57b-4db2-94fc-b1f6f2d3f847"],
 
 Cell[BoxData[
  RowBox[{"{", 
   RowBox[{
-   RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}],
+     "}"}], ",", 
+   RowBox[{"{", 
     RowBox[{
-     RowBox[{"{", 
-      RowBox[{"0", ",", 
-       FractionBox[
-        RowBox[{"beta", " ", "Ix"}], "N"]}], "}"}], ".", "T", ".", "P", ".", 
-     RowBox[{"{", 
-      RowBox[{"Ex", ",", 
-       RowBox[{
-        FractionBox[
-         RowBox[{"beta", " ", "Ix", " ", "S"}], "N"], "-", 
-        RowBox[{"Ex", " ", "sigma"}]}]}], "}"}]}], "+", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"Ex", ",", 
-       RowBox[{
-        FractionBox[
-         RowBox[{"beta", " ", "Ix", " ", "S"}], "N"], "-", 
-        RowBox[{"Ex", " ", "sigma"}]}]}], "}"}], ".", "T", ".", "P", ".", 
-     RowBox[{"{", 
-      RowBox[{
-       RowBox[{"{", 
-        RowBox[{
-        "0", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
-        "}"}], ",", 
-       RowBox[{"{", 
-        RowBox[{
-         FractionBox[
-          RowBox[{"beta", " ", "Ix"}], "N"], ",", 
-         RowBox[{"-", "sigma"}], ",", 
-         FractionBox[
-          RowBox[{"beta", " ", "S"}], "N"], ",", "0", ",", "0", ",", "0", ",", 
-         FractionBox[
-          RowBox[{"Ix", " ", "S"}], "N"]}], "}"}]}], "}"}]}]}], ",", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"1", ",", 
-       RowBox[{"-", "sigma"}]}], "}"}], ".", "T", ".", "P", ".", 
-     RowBox[{"{", 
-      RowBox[{"Ex", ",", 
-       RowBox[{
-        FractionBox[
-         RowBox[{"beta", " ", "Ix", " ", "S"}], "N"], "-", 
-        RowBox[{"Ex", " ", "sigma"}]}]}], "}"}]}], "+", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"Ex", ",", 
-       RowBox[{
-        FractionBox[
-         RowBox[{"beta", " ", "Ix", " ", "S"}], "N"], "-", 
-        RowBox[{"Ex", " ", "sigma"}]}]}], "}"}], ".", "T", ".", "P", ".", 
-     RowBox[{"{", 
-      RowBox[{
-       RowBox[{"{", 
-        RowBox[{
-        "0", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
-        "}"}], ",", 
-       RowBox[{"{", 
-        RowBox[{
-         FractionBox[
-          RowBox[{"beta", " ", "Ix"}], "N"], ",", 
-         RowBox[{"-", "sigma"}], ",", 
-         FractionBox[
-          RowBox[{"beta", " ", "S"}], "N"], ",", "0", ",", "0", ",", "0", ",", 
-         FractionBox[
-          RowBox[{"Ix", " ", "S"}], "N"]}], "}"}]}], "}"}]}]}], ",", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"0", ",", 
-       FractionBox[
-        RowBox[{"beta", " ", "S"}], "N"]}], "}"}], ".", "T", ".", "P", ".", 
-     RowBox[{"{", 
-      RowBox[{"Ex", ",", 
-       RowBox[{
-        FractionBox[
-         RowBox[{"beta", " ", "Ix", " ", "S"}], "N"], "-", 
-        RowBox[{"Ex", " ", "sigma"}]}]}], "}"}]}], "+", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"Ex", ",", 
-       RowBox[{
-        FractionBox[
-         RowBox[{"beta", " ", "Ix", " ", "S"}], "N"], "-", 
-        RowBox[{"Ex", " ", "sigma"}]}]}], "}"}], ".", "T", ".", "P", ".", 
-     RowBox[{"{", 
-      RowBox[{
-       RowBox[{"{", 
-        RowBox[{
-        "0", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
-        "}"}], ",", 
-       RowBox[{"{", 
-        RowBox[{
-         FractionBox[
-          RowBox[{"beta", " ", "Ix"}], "N"], ",", 
-         RowBox[{"-", "sigma"}], ",", 
-         FractionBox[
-          RowBox[{"beta", " ", "S"}], "N"], ",", "0", ",", "0", ",", "0", ",", 
-         FractionBox[
-          RowBox[{"Ix", " ", "S"}], "N"]}], "}"}]}], "}"}]}]}], ",", 
-   RowBox[{
-    RowBox[{"{", 
-     RowBox[{"Ex", ",", 
-      RowBox[{
-       FractionBox[
-        RowBox[{"beta", " ", "Ix", " ", "S"}], "N"], "-", 
-       RowBox[{"Ex", " ", "sigma"}]}]}], "}"}], ".", "T", ".", "P", ".", 
-    RowBox[{"{", 
-     RowBox[{
-      RowBox[{"{", 
-       RowBox[{
-       "0", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
-       "}"}], ",", 
-      RowBox[{"{", 
-       RowBox[{
-        FractionBox[
-         RowBox[{"beta", " ", "Ix"}], "N"], ",", 
-        RowBox[{"-", "sigma"}], ",", 
-        FractionBox[
-         RowBox[{"beta", " ", "S"}], "N"], ",", "0", ",", "0", ",", "0", ",", 
-        FractionBox[
-         RowBox[{"Ix", " ", "S"}], "N"]}], "}"}]}], "}"}]}], ",", 
-   RowBox[{
-    RowBox[{"{", 
-     RowBox[{"Ex", ",", 
-      RowBox[{
-       FractionBox[
-        RowBox[{"beta", " ", "Ix", " ", "S"}], "N"], "-", 
-       RowBox[{"Ex", " ", "sigma"}]}]}], "}"}], ".", "T", ".", "P", ".", 
-    RowBox[{"{", 
-     RowBox[{
-      RowBox[{"{", 
-       RowBox[{
-       "0", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
-       "}"}], ",", 
-      RowBox[{"{", 
-       RowBox[{
-        FractionBox[
-         RowBox[{"beta", " ", "Ix"}], "N"], ",", 
-        RowBox[{"-", "sigma"}], ",", 
-        FractionBox[
-         RowBox[{"beta", " ", "S"}], "N"], ",", "0", ",", "0", ",", "0", ",", 
-        FractionBox[
-         RowBox[{"Ix", " ", "S"}], "N"]}], "}"}]}], "}"}]}], ",", 
-   RowBox[{
-    RowBox[{"{", 
-     RowBox[{"Ex", ",", 
-      RowBox[{
-       FractionBox[
-        RowBox[{"beta", " ", "Ix", " ", "S"}], "N"], "-", 
-       RowBox[{"Ex", " ", "sigma"}]}]}], "}"}], ".", "T", ".", "P", ".", 
-    RowBox[{"{", 
-     RowBox[{
-      RowBox[{"{", 
-       RowBox[{
-       "0", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
-       "}"}], ",", 
-      RowBox[{"{", 
-       RowBox[{
-        FractionBox[
-         RowBox[{"beta", " ", "Ix"}], "N"], ",", 
-        RowBox[{"-", "sigma"}], ",", 
-        FractionBox[
-         RowBox[{"beta", " ", "S"}], "N"], ",", "0", ",", "0", ",", "0", ",", 
-        FractionBox[
-         RowBox[{"Ix", " ", "S"}], "N"]}], "}"}]}], "}"}]}], ",", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"0", ",", 
-       FractionBox[
-        RowBox[{"Ix", " ", "S"}], "N"]}], "}"}], ".", "T", ".", "P", ".", 
-     RowBox[{"{", 
-      RowBox[{"Ex", ",", 
-       RowBox[{
-        FractionBox[
-         RowBox[{"beta", " ", "Ix", " ", "S"}], "N"], "-", 
-        RowBox[{"Ex", " ", "sigma"}]}]}], "}"}]}], "+", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"Ex", ",", 
-       RowBox[{
-        FractionBox[
-         RowBox[{"beta", " ", "Ix", " ", "S"}], "N"], "-", 
-        RowBox[{"Ex", " ", "sigma"}]}]}], "}"}], ".", "T", ".", "P", ".", 
-     RowBox[{"{", 
-      RowBox[{
-       RowBox[{"{", 
-        RowBox[{
-        "0", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
-        "}"}], ",", 
-       RowBox[{"{", 
-        RowBox[{
-         FractionBox[
-          RowBox[{"beta", " ", "Ix"}], "N"], ",", 
-         RowBox[{"-", "sigma"}], ",", 
-         FractionBox[
-          RowBox[{"beta", " ", "S"}], "N"], ",", "0", ",", "0", ",", "0", ",", 
-         FractionBox[
-          RowBox[{"Ix", " ", "S"}], "N"]}], "}"}]}], "}"}]}]}]}], 
-  "}"}]], "Output",
+     FractionBox[
+      RowBox[{"beta", " ", "Ix"}], "N"], ",", 
+     RowBox[{"-", "sigma"}], ",", 
+     FractionBox[
+      RowBox[{"beta", " ", "S"}], "N"], ",", "0", ",", "0", ",", "0", ",", 
+     FractionBox[
+      RowBox[{"Ix", " ", "S"}], "N"]}], "}"}]}], "}"}]], "Output",
  CellChangeTimes->{
   3.798485567103733*^9, {3.798485619078692*^9, 3.79848562667441*^9}, {
-   3.798485675970559*^9, 3.79848568378467*^9}},
- CellLabel->"Out[57]=",ExpressionUUID->"be112dd9-a981-4857-bfa9-388b46af7e2f"]
+   3.798485675970559*^9, 3.79848568378467*^9}, 3.79848583173228*^9, {
+   3.7984859380063934`*^9, 3.798485966053344*^9}, 3.7984861091706257`*^9},
+ CellLabel->"Out[68]=",ExpressionUUID->"39ae177d-aae8-4de5-aceb-1d4bc15280e5"]
 }, Open  ]]
 },
 WindowSize->{759, 833},
@@ -498,8 +307,8 @@ Cell[6258, 191, 362, 7, 50, "Output",ExpressionUUID->"fc0435d2-768d-417c-8420-13
 Cell[6623, 200, 1078, 32, 98, "Output",ExpressionUUID->"5798f2da-0e2a-4f43-895c-4fa4cd71826f"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[7738, 237, 817, 22, 67, "Input",ExpressionUUID->"42f61c25-e57b-4db2-94fc-b1f6f2d3f847"],
-Cell[8558, 261, 6831, 208, 430, "Output",ExpressionUUID->"be112dd9-a981-4857-bfa9-388b46af7e2f"]
+Cell[7738, 237, 848, 20, 48, "Input",ExpressionUUID->"42f61c25-e57b-4db2-94fc-b1f6f2d3f847"],
+Cell[8589, 259, 777, 19, 107, "Output",ExpressionUUID->"39ae177d-aae8-4de5-aceb-1d4bc15280e5"]
 }, Open  ]]
 }
 ]

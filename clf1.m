@@ -28,9 +28,9 @@ S0 = N - I0;
 E0 = 0;
 R0 = 0;
 D0 = 0;
-M0 = 1e10;
-beta0 = 2.2/6.5
-x0 = [S0, E0, I0, R0, D0, M0, beta0]';
+V0 = 0;
+
+x0 = [S0, E0, I0, R0, D0, V0]';
 
 %% Functions
 F = @(S, I, E, R, V, xi, sigma, gamma, alpha, rho, lambda) [
@@ -69,7 +69,8 @@ TOTAL_STEPS = length(0:dt:TOTAL_TIME);
 x = zeros(6,TOTAL_STEPS);
 betas = zeros(1, TOTAL_STEPS);
 x(:,1) = x0;
-
+maximum_beta = 2.2/6.5;
+beta = 2.2/6.5;
 D = 0;
 c = 0;
 for i=2:TOTAL_STEPS
