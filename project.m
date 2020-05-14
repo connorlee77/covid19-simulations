@@ -1,11 +1,12 @@
 %% Constants
-xi = 0.0;
+xi = 0.000;
 sigma = 1/5.1;
 gamma = 0.154;
 alpha = 0.034;
 rho = 1/17.8;
 beta = 2.2/6.5;
 N = 8*1e9;
+lambda = 0.00001;
 % Controller Parameters
 alpha_1 = 1;
 alpha_2 = 1;
@@ -16,8 +17,9 @@ S0 = N - I0;
 E0 = 0;
 R0 = 0;
 D0 = 0;
+V0 = 0;
 
-x0 = [S0, E0, I0, R0, D0]';
+x0 = [S0, E0, I0, R0, D0, V0]';
 
 %% Time length
 TOTAL_TIME = 900; % days
@@ -25,7 +27,7 @@ dt = 0.1;
 TOTAL_STEPS = length(0:dt:TOTAL_TIME);
 
 %% Simulate
-x = zeros(5,TOTAL_STEPS);
+x = zeros(6,TOTAL_STEPS);
 x(:,1) = x0;
 maximum_beta = 2.2/6.5;
 for i=2:TOTAL_STEPS
@@ -35,9 +37,8 @@ for i=2:TOTAL_STEPS
     %%%
     
     beta = max(beta, maximum_beta);
-    maximum_beta = maximum_beta*0.999;
     
-    x(:,i) = x(:,i-1) + dynamics(x(:,i-1), xi, sigma, gamma, alpha, rho, N, beta)*dt;
+    x(:,i) = x(:,i-1) + dynamics(x(:,i-1), xi, sigma, gamma, alpha, rho, N, lambda, beta)*dt;
 end
 
 subplot(3, 2, 1)
@@ -59,3 +60,7 @@ title('R')
 subplot(3, 2, 5)
 plot(x(5,:), 'displayname', 'D')
 title('D')
+
+subplot(3, 2, 6)
+plot(x(6,:), 'displayname', 'V')
+title('V')
