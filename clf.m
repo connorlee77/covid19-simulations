@@ -33,7 +33,7 @@ V0 = 0;
 x0 = [S0, E0, I0, R0, D0, V0]';
 
 %% Functions
-F = @(I, E, R, V, xi, sigma, gamma, alpha, rho, lambda) [
+F = @(S, I, E, R, V, xi, sigma, gamma, alpha, rho, lambda) [
     xi*(R+V) - S*lambda; 
     -sigma*E; 
     sigma*E - gamma*I;
@@ -55,7 +55,7 @@ V = @(I, E, sigma, gamma) eta(I, E, sigma, gamma)'*P*eta(I, E, sigma, gamma);
 dvdeta = @(I, E, sigma, gamma) 2*eta(I, E, sigma, gamma)'*P;
 detadx = @(sigma, gamma) [0,0,1,0,0,0;0,sigma,(-1).*gamma,0,0,0];
 dvdx = @(I, E, sigma, gamma) dvdeta(I, E, sigma, gamma)*detadx(sigma, gamma);
-LfV = @(S, E, I, R, D, V, xi, sigma, gamma, alpha, rho, N, lambda) dvdx(I, E, sigma, gamma)*F(I, E, R, V, xi, sigma, gamma, alpha, rho, lambda);
+LfV = @(S, E, I, R, D, V, xi, sigma, gamma, alpha, rho, N, lambda) dvdx(I, E, sigma, gamma)*F(S, I, E, R, V, xi, sigma, gamma, alpha, rho, lambda);
 LgV = @(S, E, I, R, D, V, xi, sigma, gamma, alpha, rho, N, lambda) dvdx(I, E, sigma, gamma)*G(S, I, N);
 
 Vdot = @(S, E, I, R, D, V, xi, sigma, gamma, alpha, rho, N, lambda, u) LfV(S, E, I, R, D, V, xi, sigma, gamma, alpha, rho, N, lambda) + LgV(S, E, I, R, D, V, xi, sigma, gamma, alpha, rho, N, lambda)*u;
