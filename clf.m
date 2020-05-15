@@ -1,129 +1,134 @@
+clear all;
+clc;
+
 %% Constants
-xi = 0.0000;
+xi = 0.1;
 sigma = 1/5.1;
 gamma = 0.154;
 alpha = 0.034;
 rho = 1/17.8;
-beta = 2.2/6.5;
 N = 8*1e9;
-
+k1 = 1e-5;
+k3 = 0;
 %% CLF parameters
 scale = 1;
-k1 = 1;
-k2 = 1;
+a1 = 1;
+a2 = 1;
 
-p1 = (k1+k1^2+k2^2)/(2*k1*k2);
-p2 = 1/(2*k1);
-p3 = (k1+1)/(2*k1*k2);
+p1 = (a1+a1^2+a2^2)/(2*a1*a2);
+p2 = 1/(2*a1);
+p3 = (a1+1)/(2*a1*a2);
 P = [p1, p2; 
     p2, p3];
 
 Q = eye(2);
 clf_alpha = 1/max(eig(P));
-
+slack_alpha = 0.1;
 
 %% Intial conditions
-I0 = 10; % 10 infected
-S0 = N - I0;
-E0 = 0;
+I0 = 0.0001*N; % 10 infected
+E0 = 0.005*N;
+S0 = N - I0 - E0;
 R0 = 0;
 D0 = 0;
-M0 = 1e10;
-beta0 = 2.2/6.5
+M0 = 1e6;
+beta0 = 2.2/6.5;
 x0 = [S0, E0, I0, R0, D0, M0, beta0]';
 
 %% Functions
-F = @(S, I, E, R, V, xi, sigma, gamma, alpha, rho, lambda) [
-    xi*(R+V) - S*lambda; 
-    -sigma*E; 
-    sigma*E - gamma*I;
-    (1-alpha)*gamma*I - xi*R;
-    alpha*rho*I;
-    -xi*V + S*lambda];
+F = @(S, Ix, Ex, R, M, beta) [(-1).*beta.*Ix.*N.^(-1).*S+R.*xi,beta.*Ix.*N.^(-1).*S+(-1).*Ex.* ...
+  sigma,(-1).*gamma.*Ix+Ex.*sigma,(1+(-1).*alpha).*gamma.*Ix+(-1).* ...
+  R.*xi,alpha.*Ix.*rho,k3,0.5E-1]';
 
-G = @(S, I, N) [
-    -S*I/N; 
-    S*I/N; 
-    0; 
-    0; 
-    0;
-    0];
+G = @(M, beta) [0,0,0,0,0,(-1).*M,(-1).*beta.*k1.*M]';
 
-eta = @(I, E, sigma, gamma) [I; sigma*E-gamma*I];
-V = @(I, E, sigma, gamma) eta(I, E, sigma, gamma)'*P*eta(I, E, sigma, gamma);
+eta = @(S, Ex, Ix, beta) [Ex,beta.*Ix.*N.^(-1).*S+(-1).*Ex.*sigma]';
+V = @(S, Ex, Ix, beta) eta(S, Ex, Ix, beta)'*P*eta(S, Ex, Ix, beta);
 
-dvdeta = @(I, E, sigma, gamma) 2*eta(I, E, sigma, gamma)'*P;
-detadx = @(sigma, gamma) [0,0,1,0,0,0;0,sigma,(-1).*gamma,0,0,0];
-dvdx = @(I, E, sigma, gamma) dvdeta(I, E, sigma, gamma)*detadx(sigma, gamma);
-LfV = @(S, E, I, R, D, V, xi, sigma, gamma, alpha, rho, N, lambda) dvdx(I, E, sigma, gamma)*F(S, I, E, R, V, xi, sigma, gamma, alpha, rho, lambda);
-LgV = @(S, E, I, R, D, V, xi, sigma, gamma, alpha, rho, N, lambda) dvdx(I, E, sigma, gamma)*G(S, I, N);
+dvdeta = @(S, Ix, Ex, beta) 2*eta(S, Ex, Ix, beta)'*P;
+detadx = @(S,Ix,beta) [0,1,0,0,0,0,0;beta.*Ix.*N.^(-1),(-1).*sigma,beta.*N.^(-1).*S,0,0, ...
+  0,Ix.*N.^(-1).*S];
+dvdx = @(S, Ix, Ex, beta) dvdeta(S, Ix, Ex, beta)*detadx(S,Ix,beta);
+LfV = @(S, Ex, Ix, R, D, M, beta) dvdx(S, Ix, Ex, beta)*F(S, Ix, Ex, R, M, beta);
+LgV = @(S, Ix, Ex, M, beta) dvdx(S, Ix, Ex, beta)*G(M, beta);
 
-Vdot = @(S, E, I, R, D, V, xi, sigma, gamma, alpha, rho, N, lambda, u) LfV(S, E, I, R, D, V, xi, sigma, gamma, alpha, rho, N, lambda) + LgV(S, E, I, R, D, V, xi, sigma, gamma, alpha, rho, N, lambda)*u;
+Vdot = @(S, Ex, Ix, R, D, M, beta, u) LfV(S, Ex, Ix, R, D, M, beta) + LgV(S, Ix, Ex, M, beta)*u;
 
 %% Time length
-TOTAL_TIME = 500; % days
-dt = 1;
+TOTAL_TIME = 100; % days
+dt = 0.1;
 TOTAL_STEPS = length(0:dt:TOTAL_TIME);
 
 %% Simulate
 x = zeros(7,TOTAL_STEPS);
-betas = zeros(1, TOTAL_STEPS);
+us = zeros(1, TOTAL_STEPS);
 x(:,1) = x0;
 
-D = 0;
-c = 0;
 for i=2:TOTAL_STEPS
+    i
     
+    if i > TOTAL_STEPS/2 && i < TOTAL_STEPS*3/4
+        k3 = 100000;
+    end
     cvx_begin quiet
 
-        variables c;
+        variables u dh;
         
-        cost = c^2;
+        cost = u^2 + dh^2;
         
         minimize(cost);
         subject to
             
             % Get current states
             S = x(1,i-1);
-            E = x(2,i-1); 
-            I = x(3,i-1);
+            Ex = x(2,i-1); 
+            Ix = x(3,i-1);
             R = x(4,i-1);
             D = x(5,i-1);
-            Vac = x(6,i-1);
+            M = x(6,i-1);
+            beta = x(7,i-1);
             % Constraints
 
-            Vdot(S, E, I, R, D, Vac, xi, sigma, gamma, alpha, rho, N, lambda, beta) <= -clf_alpha*V(I, E, sigma, gamma);
+            Vdot(S, Ex, Ix, R, D, M, beta, u) <= -clf_alpha*V(S, Ex, Ix, beta) + dh;
+            M > 0;
     cvx_end
-
-    beta = max(beta, 2.2/6.5);
-    x(:,i) = x(:,i-1) + dynamics(x(:,i-1), xi, sigma, gamma, alpha, rho, N, lambda, beta)*dt;
-    betas(i) = beta;
+%     if i < TOTAL_STEPS*0.25
+%         u = 0;
+%     end
+    M
+    u = min(0.75, u);
+    x(:,i) = x(:,i-1) + dynamics(x(:,i-1), xi, sigma, gamma, alpha, rho, N, k1, k3, u)*dt;
+    us(i) = u;
 end
 
-subplot(3, 2, 1)
+subplot(2, 4, 1)
 plot(x(1,:), 'displayname', 'S')
 title('S')
 
-subplot(3, 2, 2)
+subplot(2, 4, 2)
 plot(x(2,:), 'displayname', 'E')
-title('E')
+title('E')8*1e9
 
-subplot(3, 2, 3)
+subplot(2, 4, 3)
 plot(x(3,:), 'displayname', 'I')
 title('I')
 
-subplot(3, 2, 4)
+subplot(2, 4, 4)
 plot(x(4,:), 'displayname', 'R')
 title('R')
 
-subplot(3, 2, 5)
+subplot(2, 4, 5)
 plot(x(5,:), 'displayname', 'D')
 title('D')
 
-subplot(3, 2, 6)
-plot(x(6,:), 'displayname', 'D')
-title('V')
+subplot(2, 4, 6)
+plot(x(6,:), 'displayname', 'M')
+title('M')
 
-figure;
-plot(betas)
-title('beta');
+subplot(2, 4, 7)
+plot(x(7,:), 'displayname', 'beta')
+title('beta')
+
+subplot(2, 4, 8)
+plot(us, 'displayname', 'u')
+title('u')
